@@ -1,15 +1,16 @@
-# js-eslint-prettier-template
+# odin-etch-a-sketch
 
-A template repo for new JavaScript projects in VSCode with ESLint and Prettier
-configured. Largely follows [AirBnb style guide](https://github.com/airbnb/javascript).
+[Etcha-a-Sketch project](https://www.theodinproject.com/lessons/foundations-etch-a-sketch)
+for The Odin Project.
 
-## Setup Instructions
+## Usage
 
-1. Create new repo in GitHub from this template
-2. Clone repo to local dev environment
-3. Ensure node is installed on local
-4. To install dev depdendencies and update project name, run cmd:
+Run in live server or host. Hover mouse over elements to "draw" pixels on the screen. Press
+"Clear" button to wipe the screen. Or press "Resize" for a prompt to change the pixel density
+on the screen (also clears).
 
-```bash
-node setup.js
-```
+## Skills Practiced
+
+- JavaScript DOM manipulation
+- Event listeners
+- CSS Flexbox
