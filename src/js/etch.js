@@ -7,12 +7,12 @@ const screen = document.querySelector('.screen');
  * @param {HTMLElement} screen - the container element which new pixels are attached
  */
 function createPixel(screen, numPixels) {
-	var pixel = document.createElement('div');
+	const pixel = document.createElement('div');
 
 	pixel.classList.add('pixel');
 
 	pixel.style.flexGrow = 1;
-	pixel.style.flexBasis = (1 / numPixels) * 100 + '%';
+	pixel.style.flexBasis = `${(1 / numPixels) * 100}%`;
 	screen.appendChild(pixel);
 }
 
