@@ -1,8 +1,14 @@
 const initSize = 16;
 
+function isNumber(value) {
+	return typeof value === 'number' && !Number.isNaN(value);
+}
+
 class EtchASketch {
-	constructor() {
+	constructor(size) {
 		this.screen = document.querySelector('.screen');
+		this.size = size;
+		this.populateScreen();
 	}
 
 	/** Creates new div to represent "pixel" element. Its size is based on the number of
@@ -22,13 +28,10 @@ class EtchASketch {
 		return pixel;
 	}
 
-	/** Creates size * size number of pixels and attaches them to the .screen flexbox element
-	 *
-	 * @param {number} size - the side length of the screen in number of "pixels"
-	 */
-	populateScreen(size) {
-		for (let i = 0; i < size * size; i++) {
-			const pixel = EtchASketch.createPixel(size);
+	/** Creates size * size number of pixels and attaches them to the .screen flexbox element*/
+	populateScreen() {
+		for (let i = 0; i < this.size * this.size; i++) {
+			const pixel = EtchASketch.createPixel(this.size);
 			pixel.id = `pixel${i}`;
 			this.screen.appendChild(pixel);
 		}
@@ -40,10 +43,18 @@ class EtchASketch {
 			pixel.classList.remove('pixel--painted');
 		});
 	}
+
+	/** Removes all pixel elements from the screen. Updates this.size. Re populates screen
+	 * with the new size.
+	 */
+	resize(newSize) {
+		this.screen.querySelectorAll('.pixel').forEach((pixel) => pixel.remove());
+		this.size = newSize;
+		this.populateScreen();
+	}
 }
 
-const etch = new EtchASketch();
-etch.populateScreen(initSize);
+const etch = new EtchASketch(initSize);
 
 const etchEl = document.querySelector('.etch');
 etchEl.addEventListener('mouseover', (e) => {
@@ -55,4 +66,22 @@ etchEl.addEventListener('mouseover', (e) => {
 const clearBtn = document.querySelector('#clear-btn');
 clearBtn.addEventListener('click', () => {
 	etch.clear();
+});
+
+const resizeBtn = document.querySelector('#resize-btn');
+resizeBtn.addEventListener('click', () => {
+	let newNumPixels = NaN;
+	while (!isNumber(newNumPixels) || newNumPixels < 0 || newNumPixels > 100) {
+		newNumPixels = Number(
+			prompt(
+				'Enter new pixel length for screen between 1 and 100. \nOr press ESC to go back. \nWarning: This will also clear the screen!'
+			)
+		);
+	}
+
+	if (newNumPixels === 0) {
+		return;
+	}
+
+	etch.resize(newNumPixels);
 });
