@@ -10,16 +10,19 @@
 </head>
 
 <body class="body">
+
   <div class="btn-controls">
     <button class="clear-btn" id="clear-btn">Clear</button>
     <button class="resize-btn" id="resize-btn">Resize</button>
   </div>
+
   <div class="etch">
     <div class="etch__title">Etch-A-Sketch</div>
     <div class="screen"></div>
-    <div class="etch__knob etch__knob--left"></div>
-    <div class="etch__knob etch__knob--right"></div>
+    <div class="etch__knob etch__knob--left" id="etch__knob--left"></div>
+    <div class="etch__knob etch__knob--right" id="etch__knob--right"></div>
   </div>
+
   <div class="mode-controls">
     <label for="color-mode">Color Mode</label>
     <select name="color-mode" id="color-mode" autocomplete="off">
@@ -37,7 +40,7 @@
     <select name="paint-mode" id="paint-mode" autocomplete="off">
       <option value="default" selected>Mouse Hover</option>
       <option value="keyboard">Keyboard Control</option>
-      <option value="knobs" disabled>Knobs</option>
+      <option value="knobs">Knobs</option>
     </select>
   </div>
 </body>

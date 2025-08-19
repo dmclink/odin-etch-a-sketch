@@ -31,8 +31,16 @@ class EtchASketch {
 		this.cursorLoc = 0;
 		this.populateScreen();
 		this.pixels = this.screen.querySelectorAll('.pixel');
+
 		this.hoverPaint = this.hoverPaint.bind(this);
 		this.keyboardPaint = this.keyboardPaint.bind(this);
+		this.knobLeftPaint = this.knobLeftPaint.bind(this);
+		this.knobRightPaint = this.knobRightPaint.bind(this);
+
+		this.knobLeft = document.querySelector('#etch__knob--left');
+		this.knobRight = document.querySelector('#etch__knob--right');
+		this.knobWidth = this.knobLeft.offsetWidth;
+
 		this.updatePaintMode('default');
 	}
 
@@ -157,11 +165,39 @@ class EtchASketch {
 	 * ASSUME: this function is only called when possible to move (won't send out of bounds)
 	 * @param {number} delta - the change in pixel position
 	 */
-	moveCursor(delta) {
+	moveCursorAndPaint(delta) {
 		this.pixels[this.cursorLoc].classList.remove('pixel--glowing');
 		this.cursorLoc += delta;
 		this.pixels[this.cursorLoc].classList.add('pixel--glowing');
 		this.paintPixel(this.pixels[this.cursorLoc]);
+	}
+
+	/** Checks if cursor can move up without going out of bounds. Moves and paints if so */
+	tryPaintUp() {
+		if (this.cursorLoc - this.size > -1) {
+			this.moveCursorAndPaint(-this.size);
+		}
+	}
+
+	/** Checks if cursor can move down without going out of bounds. Moves and paints if so */
+	tryPaintDown() {
+		if (this.cursorLoc + this.size < this.size * this.size) {
+			this.moveCursorAndPaint(+this.size);
+		}
+	}
+
+	/** Checks if cursor can move left without going out of bounds. Moves and paints if so */
+	tryPaintLeft() {
+		if (this.cursorLoc % this.size !== 0) {
+			this.moveCursorAndPaint(-1);
+		}
+	}
+
+	/** Checks if cursor can move right without going out of bounds. Moves and paints if so */
+	tryPaintRight() {
+		if ((this.cursorLoc + 1) % this.size !== 0) {
+			this.moveCursorAndPaint(1);
+		}
 	}
 
 	/** Event listener to paint whenever arrow keys are pressed */
@@ -169,29 +205,48 @@ class EtchASketch {
 		e.preventDefault();
 		switch (e.key) {
 			case 'ArrowUp':
-				if (this.cursorLoc - this.size > -1) {
-					this.moveCursor(-this.size);
-				}
+				this.tryPaintUp();
 				break;
 
 			case 'ArrowDown':
-				if (this.cursorLoc + this.size < this.size * this.size) {
-					this.moveCursor(+this.size);
-				}
+				this.tryPaintDown();
 				break;
 
 			case 'ArrowLeft':
-				if (this.cursorLoc % this.size !== 0) {
-					this.moveCursor(-1);
-				}
+				this.tryPaintLeft();
 				break;
+
 			case 'ArrowRight':
-				if ((this.cursorLoc + 1) % this.size !== 0) {
-					this.moveCursor(1);
-				}
+				this.tryPaintRight();
 				break;
+
 			default:
 				break;
+		}
+	}
+
+	/** Event listener for clicking on the left knob. Moves cursor and paints horizontally.
+	 *
+	 * @param {Event} e - the event
+	 */
+	knobLeftPaint(e) {
+		console.log(e.offsetX);
+		if (e.offsetX < this.knobWidth / 2) {
+			this.tryPaintLeft();
+		} else {
+			this.tryPaintRight();
+		}
+	}
+
+	/** Event listener for clicking on the right knob. Moves cursor and paints vertically.
+	 *
+	 * @param {Event} e - the event
+	 */
+	knobRightPaint(e) {
+		if (e.offsetX < this.knobWidth / 2) {
+			this.tryPaintDown();
+		} else {
+			this.tryPaintUp();
 		}
 	}
 
@@ -205,17 +260,32 @@ class EtchASketch {
 			case 'default':
 				this.pixels[this.cursorLoc].classList.remove('pixel--glowing');
 				this.screen.addEventListener('mouseover', this.hoverPaint);
+
 				document.removeEventListener('keydown', this.keyboardPaint);
+				this.knobLeft.removeEventListener('click', this.knobLeftPaint);
+				this.knobRight.removeEventListener('click', this.knobRightPaint);
+				this.knobLeft.classList.remove('active');
+				this.knobRight.classList.remove('active');
 				break;
 
 			case 'keyboard':
 				this.pixels[this.cursorLoc].classList.add('pixel--glowing');
-				this.screen.removeEventListener('mouseover', this.hoverPaint);
 				document.addEventListener('keydown', this.keyboardPaint);
+
+				this.screen.removeEventListener('mouseover', this.hoverPaint);
+				this.knobLeft.removeEventListener('click', this.knobLeftPaint);
+				this.knobRight.removeEventListener('click', this.knobRightPaint);
+				this.knobLeft.classList.remove('active');
+				this.knobRight.classList.remove('active');
 				break;
 
 			case 'knobs':
 				this.pixels[this.cursorLoc].classList.add('pixel--glowing');
+				this.knobLeft.addEventListener('click', this.knobLeftPaint);
+				this.knobRight.addEventListener('click', this.knobRightPaint);
+				this.knobLeft.classList.add('active');
+				this.knobRight.classList.add('active');
+
 				this.screen.removeEventListener('mouseover', this.hoverPaint);
 				document.removeEventListener('keydown', this.keyboardPaint);
 				break;

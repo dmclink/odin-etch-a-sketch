@@ -66,6 +66,10 @@ html {
 	background-color: whitesmoke;
 }
 
+.etch__knob.active {
+	cursor: pointer;
+}
+
 .etch__knob--left {
 	bottom: -20%;
 	left: -20%;
