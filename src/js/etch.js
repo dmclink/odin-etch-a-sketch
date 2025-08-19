@@ -28,7 +28,7 @@ class EtchASketch {
 	 */
 	populateScreen(size) {
 		for (let i = 0; i < size * size; i++) {
-			const pixel = EtchASketch.createPixel(screen, size);
+			const pixel = EtchASketch.createPixel(size);
 			this.screen.appendChild(pixel);
 		}
 	}
