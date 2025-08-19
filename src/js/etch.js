@@ -64,12 +64,25 @@ class EtchASketch {
 		});
 	}
 
-	/** Removes all pixel elements from the screen. Updates this.size. Re populates screen
-	 * with the new size.
+	/** Prompts the user for a new pixel size. If valid size is entered, removes all pixel
+	 * elements from the screen. Updates this.size. Re populates screen with the new size.
 	 */
-	resize(newSize) {
+	resize() {
+		let newNumPixels = NaN;
+		while (!isNumber(newNumPixels) || newNumPixels < 0 || newNumPixels > 100) {
+			newNumPixels = Number(
+				prompt(
+					'Enter new pixel length for screen between 1 and 100. \nOr press ESC to go back. \nWarning: This will also clear the screen!'
+				)
+			);
+		}
+
+		if (newNumPixels === 0) {
+			return;
+		}
+
 		this.screen.querySelectorAll('.pixel').forEach((pixel) => pixel.remove());
-		this.size = newSize;
+		this.size = newNumPixels;
 		this.populateScreen();
 	}
 
@@ -124,18 +137,5 @@ colorModeSelect.addEventListener('change', (e) => {
 
 const resizeBtn = document.querySelector('#resize-btn');
 resizeBtn.addEventListener('click', () => {
-	let newNumPixels = NaN;
-	while (!isNumber(newNumPixels) || newNumPixels < 0 || newNumPixels > 100) {
-		newNumPixels = Number(
-			prompt(
-				'Enter new pixel length for screen between 1 and 100. \nOr press ESC to go back. \nWarning: This will also clear the screen!'
-			)
-		);
-	}
-
-	if (newNumPixels === 0) {
-		return;
-	}
-
-	etch.resize(newNumPixels);
+	etch.resize();
 });
