@@ -29,6 +29,7 @@ class EtchASketch {
 	populateScreen(size) {
 		for (let i = 0; i < size * size; i++) {
 			const pixel = EtchASketch.createPixel(size);
+			pixel.id = `pixel${i}`;
 			this.screen.appendChild(pixel);
 		}
 	}
@@ -36,3 +37,10 @@ class EtchASketch {
 
 const etch = new EtchASketch();
 etch.populateScreen(initSize);
+
+const etchEl = document.querySelector('.etch');
+etchEl.addEventListener('mouseover', (e) => {
+	if (e.target.id.startsWith('pixel')) {
+		e.target.classList.add('pixel--painted');
+	}
+});

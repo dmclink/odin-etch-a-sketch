@@ -58,7 +58,7 @@ html {
 	position: relative;
 }
 
-.knob {
+.etch__knob {
 	height: 20%;
 	width: 20%;
 	position: absolute;
@@ -66,11 +66,11 @@ html {
 	background-color: whitesmoke;
 }
 
-.knob-left {
+.etch__knob--left {
 	bottom: -20%;
 	left: -20%;
 }
-.knob-right {
+.etch__knob--right {
 	bottom: -20%;
 	right: -20%;
 }
@@ -88,4 +88,8 @@ html {
 .pixel {
 	outline: 1px dotted lightslategray;
 	background-color: lightgray;
+}
+
+.pixel--painted {
+	background-color: #333;
 }
