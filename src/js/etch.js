@@ -33,6 +33,13 @@ class EtchASketch {
 			this.screen.appendChild(pixel);
 		}
 	}
+
+	/** Clears the Etch A Sketch screen wiping all pixels back to their original state */
+	clear() {
+		this.screen.querySelectorAll('.pixel').forEach((pixel) => {
+			pixel.classList.remove('pixel--painted');
+		});
+	}
 }
 
 const etch = new EtchASketch();
@@ -43,4 +50,9 @@ etchEl.addEventListener('mouseover', (e) => {
 	if (e.target.id.startsWith('pixel')) {
 		e.target.classList.add('pixel--painted');
 	}
+});
+
+const clearBtn = document.querySelector('#clear-btn');
+clearBtn.addEventListener('click', () => {
+	etch.clear();
 });
