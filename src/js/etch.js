@@ -25,6 +25,7 @@ class EtchASketch {
 		this.screen = document.querySelector('.screen');
 		this.size = size;
 		this.colorMode = 'default';
+		this.darkenMode = 'default';
 		this.defaultColor = '#333';
 		this.populateScreen();
 	}
@@ -42,7 +43,6 @@ class EtchASketch {
 
 		pixel.style.flexGrow = 1;
 		pixel.style.flexBasis = `${(1 / numPixels) * 100}%`;
-		pixel.setAttribute('data-opacity', '0.5');
 
 		return pixel;
 	}
@@ -61,6 +61,7 @@ class EtchASketch {
 		this.screen.querySelectorAll('.pixel').forEach((pixel) => {
 			// pixel.classList.remove('pixel--painted');
 			pixel.style.backgroundColor = 'transparent';
+			pixel.style.opacity = '';
 		});
 	}
 
@@ -105,6 +106,16 @@ class EtchASketch {
 					document.querySelector('#custom-color').value;
 				break;
 		}
+
+		switch (this.darkenMode) {
+			case 'default':
+				pixel.style.opacity = 1;
+				break;
+
+			case 'gradual':
+				pixel.style.opacity = Number(pixel.style.opacity) + 0.1;
+				break;
+		}
 	}
 
 	/** Updates color mode for this object
@@ -113,6 +124,14 @@ class EtchASketch {
 	 */
 	updateColorMode(newColorMode) {
 		this.colorMode = newColorMode;
+	}
+
+	/** Updates darken mode for this object
+	 *
+	 * @param {'default'|'gradual'} newDarkenMode
+	 */
+	updateDarkenMode(newDarkenMode) {
+		this.darkenMode = newDarkenMode;
 	}
 }
 
@@ -138,4 +157,9 @@ colorModeSelect.addEventListener('change', (e) => {
 const resizeBtn = document.querySelector('#resize-btn');
 resizeBtn.addEventListener('click', () => {
 	etch.resize();
+});
+
+const darkenModeSelect = document.querySelector('#darken-mode');
+darkenModeSelect.addEventListener('change', (e) => {
+	etch.updateDarkenMode(e.target.value);
 });
