@@ -1,13 +1,31 @@
 const initSize = 16;
 
+/** Returns true if the value passed is a number
+ *
+ * @param {any} value - the value to test if it is a number
+ * @returns {boolean}
+ */
 function isNumber(value) {
 	return typeof value === 'number' && !Number.isNaN(value);
+}
+
+/** Generates a random color and outputs it as an rgb string in css style format
+ *
+ * @returns {string} - rgb string of a randomized color
+ */
+function randomColor() {
+	const random255 = function () {
+		return Math.random() * 255;
+	};
+	return `rgb(${random255()}, ${random255()}, ${random255()})`;
 }
 
 class EtchASketch {
 	constructor(size) {
 		this.screen = document.querySelector('.screen');
 		this.size = size;
+		this.colorMode = 'default';
+		this.defaultColor = '#333';
 		this.populateScreen();
 	}
 
@@ -24,6 +42,7 @@ class EtchASketch {
 
 		pixel.style.flexGrow = 1;
 		pixel.style.flexBasis = `${(1 / numPixels) * 100}%`;
+		pixel.setAttribute('data-opacity', '0.5');
 
 		return pixel;
 	}
@@ -40,7 +59,8 @@ class EtchASketch {
 	/** Clears the Etch A Sketch screen wiping all pixels back to their original state */
 	clear() {
 		this.screen.querySelectorAll('.pixel').forEach((pixel) => {
-			pixel.classList.remove('pixel--painted');
+			// pixel.classList.remove('pixel--painted');
+			pixel.style.backgroundColor = 'transparent';
 		});
 	}
 
@@ -52,6 +72,35 @@ class EtchASketch {
 		this.size = newSize;
 		this.populateScreen();
 	}
+
+	/** Paints a pixel depending on the color mode of the etch a sketch
+	 * @param {HTMLElement} pixel - the pixel to be painted
+	 */
+	paintPixel(pixel) {
+		switch (this.colorMode) {
+			case 'default':
+				pixel.style.backgroundColor = this.defaultColor;
+				break;
+
+			case 'random':
+				console.log(randomColor());
+				pixel.style.backgroundColor = randomColor();
+				break;
+
+			case 'custom':
+				pixel.style.backgroundColor =
+					document.querySelector('#custom-color').value;
+				break;
+		}
+	}
+
+	/** Updates color mode for this object
+	 *
+	 * @param {'default'|'random'|'custom'} newColorMode
+	 */
+	updateColorMode(newColorMode) {
+		this.colorMode = newColorMode;
+	}
 }
 
 const etch = new EtchASketch(initSize);
@@ -59,13 +108,18 @@ const etch = new EtchASketch(initSize);
 const etchEl = document.querySelector('.etch');
 etchEl.addEventListener('mouseover', (e) => {
 	if (e.target.id.startsWith('pixel')) {
-		e.target.classList.add('pixel--painted');
+		etch.paintPixel(e.target);
 	}
 });
 
 const clearBtn = document.querySelector('#clear-btn');
 clearBtn.addEventListener('click', () => {
 	etch.clear();
+});
+
+const colorModeSelect = document.querySelector('#color-mode');
+colorModeSelect.addEventListener('change', (e) => {
+	etch.updateColorMode(e.target.value);
 });
 
 const resizeBtn = document.querySelector('#resize-btn');

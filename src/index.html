@@ -10,7 +10,7 @@
 </head>
 
 <body class="body">
-  <div class="controls">
+  <div class="btn-controls">
     <button class="clear-btn" id="clear-btn">Clear</button>
     <button class="resize-btn" id="resize-btn">Resize</button>
   </div>
@@ -19,6 +19,15 @@
     <div class="screen"></div>
     <div class="etch__knob etch__knob--left"></div>
     <div class="etch__knob etch__knob--right"></div>
+  </div>
+  <div class="mode-controls">
+    <label for="color-mode">Color Mode</label>
+    <select name="color-mode" id="color-mode" autocomplete="off">
+      <option value="default">Default</option>
+      <option value="random">Random</option>
+      <option value="custom">Custom</option>
+    </select>
+    <input type="color" name="custom-color" id="custom-color">
   </div>
 </body>
 

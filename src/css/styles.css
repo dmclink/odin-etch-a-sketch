@@ -25,18 +25,18 @@ html {
 	background: #333;
 }
 
-.controls {
+.btn-controls {
 	margin: 0 auto;
 	width: max-content;
 	margin-bottom: 2rem;
 }
 
-.controls button {
+.btn-controls button {
 	padding: 0.8rem 1.6rem;
 	font-size: 1.6rem;
 }
 
-.controls button:first-child {
+.btn-controls button:first-child {
 	margin-right: 2rem;
 }
 
@@ -83,11 +83,11 @@ html {
 	border: 1px solid #000;
 	border-radius: var(--radius);
 	overflow: hidden;
+	background-color: lightgray;
 }
 
 .pixel {
 	outline: 1px dotted lightslategray;
-	background-color: lightgray;
 }
 
 .pixel--painted {
