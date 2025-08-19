@@ -1,21 +1,38 @@
 const initSize = 16;
 
-const screen = document.querySelector('.screen');
+class EtchASketch {
+	constructor() {
+		this.screen = document.querySelector('.screen');
+	}
 
-/** Creates new div to represent "pixel" element and attaches it to screen.
- *
- * @param {HTMLElement} screen - the container element which new pixels are attached
- */
-function createPixel(screen, numPixels) {
-	const pixel = document.createElement('div');
+	/** Creates new div to represent "pixel" element. Its size is based on the number of
+	 * pixels side length
+	 *
+	 * @param {number} numPixels - the side length of the screen in number of pixels. determines pixel size
+	 * @returns {HTMLElement} - the new div.pixel created
+	 */
+	static createPixel(numPixels) {
+		const pixel = document.createElement('div');
 
-	pixel.classList.add('pixel');
+		pixel.classList.add('pixel');
 
-	pixel.style.flexGrow = 1;
-	pixel.style.flexBasis = `${(1 / numPixels) * 100}%`;
-	screen.appendChild(pixel);
+		pixel.style.flexGrow = 1;
+		pixel.style.flexBasis = `${(1 / numPixels) * 100}%`;
+
+		return pixel;
+	}
+
+	/** Creates size * size number of pixels and attaches them to the .screen flexbox element
+	 *
+	 * @param {number} size - the side length of the screen in number of "pixels"
+	 */
+	populateScreen(size) {
+		for (let i = 0; i < size * size; i++) {
+			const pixel = EtchASketch.createPixel(screen, size);
+			this.screen.appendChild(pixel);
+		}
+	}
 }
 
-for (let i = 0; i < initSize * initSize; i++) {
-	createPixel(screen, initSize);
-}
+const etch = new EtchASketch();
+etch.populateScreen(initSize);
