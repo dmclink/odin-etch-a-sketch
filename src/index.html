@@ -23,15 +23,21 @@
   <div class="mode-controls">
     <label for="color-mode">Color Mode</label>
     <select name="color-mode" id="color-mode" autocomplete="off">
-      <option value="default">Default</option>
+      <option value="default" selected>Default</option>
       <option value="random">Random</option>
       <option value="custom">Custom</option>
     </select>
     <input type="color" name="custom-color" id="custom-color">
-    <label for="darken-mode">Paint Mode</label>
+    <label for="darken-mode">Transparency</label>
     <select name="darken-mode" id="darken-mode" autocomplete="off">
-      <option value="default">Default</option>
+      <option value="default" selected>Default</option>
       <option value="gradual">Gradual</option>
+    </select>
+    <label for="paint-mode">Paint Mode</label>
+    <select name="paint-mode" id="paint-mode" autocomplete="off">
+      <option value="default" selected>Mouse Hover</option>
+      <option value="keyboard">Keyboard Control</option>
+      <option value="knobs" disabled>Knobs</option>
     </select>
   </div>
 </body>

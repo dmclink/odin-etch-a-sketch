@@ -24,10 +24,16 @@ class EtchASketch {
 	constructor(size) {
 		this.screen = document.querySelector('.screen');
 		this.size = size;
+		this.defaultColor = '#333';
 		this.colorMode = 'default';
 		this.darkenMode = 'default';
-		this.defaultColor = '#333';
+		this.paintMode = 'default';
+		this.cursorLoc = 0;
 		this.populateScreen();
+		this.pixels = this.screen.querySelectorAll('.pixel');
+		this.hoverPaint = this.hoverPaint.bind(this);
+		this.keyboardPaint = this.keyboardPaint.bind(this);
+		this.updatePaintMode('default');
 	}
 
 	/** Creates new div to represent "pixel" element. Its size is based on the number of
@@ -85,6 +91,11 @@ class EtchASketch {
 		this.screen.querySelectorAll('.pixel').forEach((pixel) => pixel.remove());
 		this.size = newNumPixels;
 		this.populateScreen();
+		this.pixels = document.querySelectorAll('.pixel');
+		this.cursorLoc = 0;
+		if (this.paintMode === 'keyboard' || this.paintMode === 'knobs') {
+			this.pixels[0].classList.add('pixel--glowing');
+		}
 	}
 
 	/** Paints a pixel depending on the color mode of the etch a sketch
@@ -133,16 +144,86 @@ class EtchASketch {
 	updateDarkenMode(newDarkenMode) {
 		this.darkenMode = newDarkenMode;
 	}
+
+	/** Event listener to paint whenever mouse hovers over a pixel */
+	hoverPaint(e) {
+		if (e.target.id.startsWith('pixel')) {
+			this.paintPixel(e.target);
+		}
+	}
+
+	/** Moves cursor by delta pixels and paints the pixel that the cursor lands on.
+	 *
+	 * ASSUME: this function is only called when possible to move (won't send out of bounds)
+	 * @param {number} delta - the change in pixel position
+	 */
+	moveCursor(delta) {
+		this.pixels[this.cursorLoc].classList.remove('pixel--glowing');
+		this.cursorLoc += delta;
+		this.pixels[this.cursorLoc].classList.add('pixel--glowing');
+		this.paintPixel(this.pixels[this.cursorLoc]);
+	}
+
+	/** Event listener to paint whenever arrow keys are pressed */
+	keyboardPaint(e) {
+		e.preventDefault();
+		switch (e.key) {
+			case 'ArrowUp':
+				if (this.cursorLoc - this.size > -1) {
+					this.moveCursor(-this.size);
+				}
+				break;
+
+			case 'ArrowDown':
+				if (this.cursorLoc + this.size < this.size * this.size) {
+					this.moveCursor(+this.size);
+				}
+				break;
+
+			case 'ArrowLeft':
+				if (this.cursorLoc % this.size !== 0) {
+					this.moveCursor(-1);
+				}
+				break;
+			case 'ArrowRight':
+				if ((this.cursorLoc + 1) % this.size !== 0) {
+					this.moveCursor(1);
+				}
+				break;
+			default:
+				break;
+		}
+	}
+
+	/** Updates paint mode for this object by adding and removing the appropriate event listeners
+	 *
+	 * @param {'default'|'keyboard'|'knobs'} newPaintMode
+	 */
+	updatePaintMode(newPaintMode) {
+		this.paintMode = newPaintMode;
+		switch (newPaintMode) {
+			case 'default':
+				this.pixels[this.cursorLoc].classList.remove('pixel--glowing');
+				this.screen.addEventListener('mouseover', this.hoverPaint);
+				document.removeEventListener('keydown', this.keyboardPaint);
+				break;
+
+			case 'keyboard':
+				this.pixels[this.cursorLoc].classList.add('pixel--glowing');
+				this.screen.removeEventListener('mouseover', this.hoverPaint);
+				document.addEventListener('keydown', this.keyboardPaint);
+				break;
+
+			case 'knobs':
+				this.pixels[this.cursorLoc].classList.add('pixel--glowing');
+				this.screen.removeEventListener('mouseover', this.hoverPaint);
+				document.removeEventListener('keydown', this.keyboardPaint);
+				break;
+		}
+	}
 }
 
 const etch = new EtchASketch(initSize);
-
-const etchEl = document.querySelector('.etch');
-etchEl.addEventListener('mouseover', (e) => {
-	if (e.target.id.startsWith('pixel')) {
-		etch.paintPixel(e.target);
-	}
-});
 
 const clearBtn = document.querySelector('#clear-btn');
 clearBtn.addEventListener('click', () => {
@@ -162,4 +243,9 @@ resizeBtn.addEventListener('click', () => {
 const darkenModeSelect = document.querySelector('#darken-mode');
 darkenModeSelect.addEventListener('change', (e) => {
 	etch.updateDarkenMode(e.target.value);
+});
+
+const paintModeSelect = document.querySelector('#paint-mode');
+paintModeSelect.addEventListener('change', (e) => {
+	etch.updatePaintMode(e.target.value);
 });
