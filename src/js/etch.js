@@ -143,6 +143,14 @@ class EtchASketch {
 	 */
 	updateColorMode(newColorMode) {
 		this.colorMode = newColorMode;
+		switch (newColorMode) {
+			case 'custom':
+				document.querySelector('#custom-color').hidden = false;
+				break;
+
+			default:
+				document.querySelector('#custom-color').hidden = true;
+		}
 	}
 
 	/** Updates darken mode for this object
