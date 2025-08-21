@@ -71,6 +71,7 @@ html {
 	background-color: var(--etch-c);
 	min-width: 40px;
 	min-height: 40px;
+	user-select: none;
 }
 .etch__lr-side {
 	height: 100%;
@@ -133,6 +134,7 @@ html {
 	overflow: hidden;
 	background-color: lightgray;
 	flex-shrink: 0;
+	user-select: none;
 }
 
 .pixel {
