@@ -116,7 +116,6 @@ class EtchASketch {
 				break;
 
 			case 'random':
-				console.log(randomColor());
 				pixel.style.backgroundColor = randomColor();
 				break;
 
@@ -238,7 +237,6 @@ class EtchASketch {
 	 * @param {Event} e - the event
 	 */
 	knobLeftPaint(e) {
-		console.log(e.offsetX);
 		if (e.offsetX < this.knobWidth / 2) {
 			this.tryPaintLeft();
 		} else {
@@ -337,7 +335,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				option.selected = false;
 			}
 		}
-		// etch.updatePaintMode('knobs');
+
 		const e = new Event('change');
 		paintModeSelect.dispatchEvent(e);
 	}
