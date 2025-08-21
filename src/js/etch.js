@@ -319,3 +319,18 @@ const paintModeSelect = document.querySelector('#paint-mode');
 paintModeSelect.addEventListener('change', (e) => {
 	etch.updatePaintMode(e.target.value);
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+	if (!matchMedia('(pointer:fine)').matches) {
+		for (const option of paintModeSelect.options) {
+			if (option.value === 'knobs') {
+				option.selected = true;
+			} else {
+				option.selected = false;
+			}
+		}
+		// etch.updatePaintMode('knobs');
+		const e = new Event('change');
+		paintModeSelect.dispatchEvent(e);
+	}
+});
