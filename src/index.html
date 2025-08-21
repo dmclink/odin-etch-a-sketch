@@ -11,9 +11,32 @@
 
 <body class="body">
 
-  <div class="btn-controls">
-    <button class="clear-btn" id="clear-btn">Clear</button>
-    <button class="resize-btn" id="resize-btn">Resize</button>
+  <div class="controls">
+    <div class="mode-controls">
+      <label for="color-mode">Color Mode</label>
+      <select name="color-mode" id="color-mode" autocomplete="off">
+        <option value="default" selected>Default</option>
+        <option value="random">Random</option>
+        <option value="custom">Custom</option>
+      </select>
+      <input type="color" name="custom-color" id="custom-color">
+      <label for="darken-mode">Transparency</label>
+      <select name="darken-mode" id="darken-mode" autocomplete="off">
+        <option value="default" selected>Default</option>
+        <option value="gradual">Gradual</option>
+      </select>
+      <label for="paint-mode">Paint Mode</label>
+      <select name="paint-mode" id="paint-mode" autocomplete="off">
+        <option value="default" selected>Mouse Hover</option>
+        <option value="keyboard">Keyboard Control</option>
+        <option value="knobs">Knobs</option>
+      </select>
+    </div>
+
+    <div class="btn-controls">
+      <button class="clear-btn" id="clear-btn">Clear</button>
+      <button class="resize-btn" id="resize-btn">Resize</button>
+    </div>
   </div>
 
   <div class="etch">
@@ -23,26 +46,6 @@
     <img src="img/knob2.svg" class="etch__knob etch__knob--right" id="etch__knob--right">
   </div>
 
-  <div class="mode-controls">
-    <label for="color-mode">Color Mode</label>
-    <select name="color-mode" id="color-mode" autocomplete="off">
-      <option value="default" selected>Default</option>
-      <option value="random">Random</option>
-      <option value="custom">Custom</option>
-    </select>
-    <input type="color" name="custom-color" id="custom-color">
-    <label for="darken-mode">Transparency</label>
-    <select name="darken-mode" id="darken-mode" autocomplete="off">
-      <option value="default" selected>Default</option>
-      <option value="gradual">Gradual</option>
-    </select>
-    <label for="paint-mode">Paint Mode</label>
-    <select name="paint-mode" id="paint-mode" autocomplete="off">
-      <option value="default" selected>Mouse Hover</option>
-      <option value="keyboard">Keyboard Control</option>
-      <option value="knobs">Knobs</option>
-    </select>
-  </div>
 </body>
 
 </html>

@@ -26,10 +26,17 @@ html {
 	position: relative;
 }
 
-.btn-controls {
+.controls {
 	margin: 0 auto;
-	width: max-content;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 2rem;
 	margin-bottom: 2rem;
+}
+
+.btn-controls {
+	width: max-content;
 }
 
 .btn-controls button {
@@ -47,9 +54,6 @@ html {
 	max-width: 200px;
 	background-color: lightgray;
 	padding: 1rem;
-	position: absolute;
-	top: 50%;
-	left: 15%;
 	border-radius: 10px;
 }
 
