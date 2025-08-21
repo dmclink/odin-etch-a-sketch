@@ -85,11 +85,11 @@ label {
 }
 .etch__lr-side {
 	height: 100%;
-	width: clamp(40px, 10vw, 8rem);
+	width: clamp(70px, 15vw, 8rem);
 }
 .etch__tb-side {
 	width: 100%;
-	height: clamp(40px, 10vw, 8rem);
+	height: clamp(70px, 15vw, 8rem);
 	border-radius: var(--radius);
 }
 .etch__b-side {
@@ -135,9 +135,9 @@ label {
 .screen {
 	display: flex;
 	flex-flow: row wrap;
-	width: 80vw;
+	width: 70vw;
 	max-width: var(--container-size);
-	height: 80vw;
+	height: 70vw;
 	max-height: var(--container-size);
 	border: 1px solid #000;
 	border-radius: var(--radius);
