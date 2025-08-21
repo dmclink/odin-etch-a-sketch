@@ -76,7 +76,7 @@ html {
 	width: 20%;
 	position: absolute;
 	border-radius: 9999px;
-	background-color: whitesmoke;
+	background-color: red;
 }
 
 .etch__knob.active {
