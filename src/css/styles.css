@@ -17,6 +17,7 @@ html {
 :root {
 	--container-size: 500px;
 	--radius: 20px;
+	--etch-c: red;
 }
 
 /* STYLES */
@@ -57,54 +58,81 @@ html {
 	border-radius: 10px;
 }
 
-.etch__title {
-	font-family: 'Ananda Black Personal Use', sans-serif;
-	font-size: 3rem;
-	position: absolute;
-	left: 17%;
-	top: -18%;
-	color: goldenrod;
-}
-
 .etch {
-	border: 8rem solid red;
+	/* border: 8rem solid var(--etch-c); */
 	margin: 0 auto;
 	width: min-content;
-	background-color: red;
+	background-color: var(--etch-c);
 	border-radius: var(--radius);
 	position: relative;
 }
 
-.etch__knob {
-	height: 20%;
-	width: 20%;
-	position: absolute;
-	border-radius: 9999px;
-	background-color: red;
+.etch__side {
+	background-color: var(--etch-c);
+	min-width: 40px;
+	min-height: 40px;
+}
+.etch__lr-side {
+	height: 100%;
+	width: clamp(40px, 10vw, 8rem);
+}
+.etch__tb-side {
+	width: 100%;
+	height: clamp(40px, 10vw, 8rem);
+	border-radius: var(--radius);
+}
+.etch__b-side {
+	display: flex;
+	justify-content: space-between;
+}
+.etch__t-side {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
+.etch__middle {
+	display: flex;
+}
+
+.etch__title {
+	font-family: 'Ananda Black Personal Use', sans-serif;
+	font-size: clamp(10px, 5vw, 3rem);
+	color: goldenrod;
+	text-align: center;
+}
+
+.etch__knob {
+	height: 100%;
+	border-radius: 9999px;
+	background-color: var(--etch-c);
+}
 .etch__knob.active {
 	cursor: pointer;
 }
-
 .etch__knob--left {
-	bottom: -20%;
-	left: -20%;
+	position: relative;
+	left: 10px;
+	bottom: 10px;
 }
 .etch__knob--right {
-	bottom: -20%;
-	right: -20%;
+	position: relative;
+	right: 10px;
+	bottom: 10px;
 }
 
 .screen {
 	display: flex;
 	flex-flow: row wrap;
-	width: var(--container-size);
-	height: var(--container-size);
+	width: 80vw;
+	max-width: var(--container-size);
+	height: 80vw;
+	max-height: var(--container-size);
 	border: 1px solid #000;
 	border-radius: var(--radius);
 	overflow: hidden;
 	background-color: lightgray;
+	flex-shrink: 0;
 }
 
 .pixel {
