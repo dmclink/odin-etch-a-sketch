@@ -79,8 +79,6 @@ export default defineConfig([
 			'import/no-webpack-loader-syntax': 2,
 			'import/extensions': 2,
 			'no-iterator': 2,
-			// not sure how i feel about this one
-			'no-restricted-syntax': [2, 'ForInStatement', 'ForOfStatement'],
 			'generator-star-spacing': 2,
 			'dot-notation': 2,
 			'no-implicit-globals': 2,
